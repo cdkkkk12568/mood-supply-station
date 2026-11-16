@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5ec">
+  <meta name="description" content="心情小岛旅程：限时120秒或自由探索，觉察情绪、照顾自己，把一点支持送给彼此。离线可玩的心理健康互动游戏。">
+  <title>心情补给站 · 把一点关心送出去</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="game-core.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="心情补给站首页">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M22 5v34M5 22h34M10 10l24 24M10 34l24-24"/><circle cx="22" cy="22" r="7"/></svg></span>
+        <span><strong>心情补给站<span class="brand-dot">.</span></strong><small>A LITTLE CARE, A LITTLE LIGHT</small></span>
+      </a>
+      <nav class="toolbar" aria-label="游戏设置">
+        <span class="offline-badge"><i></i> 离线也能玩</span>
+        <button id="motion-btn" class="tool-btn" aria-pressed="false" title="减少装饰动画"><span aria-hidden="true">◌</span><span class="tool-text">减少动态</span></button>
+        <button id="sound-btn" class="tool-btn" aria-pressed="false" title="声音开关 M"><svg class="sound-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8c3 2 3 6 0 8M20 5c5 4 5 10 0 14"/></svg><span class="tool-text">声音关闭</span></button>
+        <button id="fullscreen-btn" class="tool-btn fullscreen-btn" title="全屏体验 F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M4 15v5h5M20 15v5h-5"/></svg><span>全屏体验</span></button>
+      </nav>
+    </header>
+
+    <main class="main-layout">
+      <aside class="side-panel">
+        <section id="home-view" class="home-view">
+          <p class="eyebrow"><span></span> 心理健康互动游戏 · 单人</p>
+          <h1>把一点关心，<br>送到<span class="highlight">需要的地方</span>。</h1>
+          <p class="intro">欢迎来到心情小岛。成为心情信使，带上补给，穿过忙碌，把支持送给岛上的朋友。</p>
+          <div class="goal-note"><span class="goal-symbol" aria-hidden="true">✦</span><p>完成 5 次支持递送，点亮灯塔<br><strong>选择节奏，开始一段小岛旅程</strong></p></div>
+          <div class="mode-picker" role="group" aria-label="选择游戏模式">
+            <button id="timed-mode-btn" class="mode-option selected" data-mode="timed" aria-pressed="true"><span class="mode-icon">◷</span><span><b>限时体验版</b><small>120 秒 · 现场快速体验</small></span><i>✓</i></button>
+            <button id="free-mode-btn" class="mode-option" data-mode="free" aria-pressed="false"><span class="mode-icon">∞</span><span><b>自由探索版</b><small>不设倒计时 · 慢慢传递支持</small></span><i>✓</i></button>
+          </div>
+          <button id="start-btn" class="primary-btn">开启小岛之旅 <span aria-hidden="true">↗</span></button>
+          <p class="start-note">无需登录 · 无需摄像头 · 准备好就出发</p>
+          <div class="keyboard-guide">
+            <div><span class="key-group"><kbd>W</kbd><span><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></span><span><b>移动</b><small>或使用方向键</small></span></div>
+            <div><kbd class="space-key">空格</kbd><span><b>短按互动</b><small>长按，暂停片刻</small></span></div>
+          </div>
+          <button id="howto-btn" class="text-btn">怎么玩 <span aria-hidden="true">↗</span></button>
+        </section>
+
+        <section id="play-view" class="play-view" hidden>
+          <div class="timer-row"><div><p id="timer-caption" class="eyebrow">留一点时间，传递支持</p><div id="timer" class="timer">02:00</div></div><button id="pause-btn" class="round-btn" title="暂停 P / Esc" aria-label="暂停游戏">Ⅱ</button></div>
+          <div class="mission-head"><span>此刻可以做的事</span><span class="tiny-label">YOUR NEXT STEP</span></div>
+          <div class="next-step"><span id="carry-icon" class="supply-icon">＋</span><div><strong id="next-title">先领取一份补给</strong><p id="next-detail">走近上方任意补给站，短按空格。</p></div></div>
+          <div class="friend-head"><span>听听朋友的心情</span><small>每种补给，都能带来支持</small></div>
+          <div id="mission-list" class="mission-list"></div>
+          <button id="skill-btn" class="skill-card"><span class="skill-symbol" aria-hidden="true">◌</span><span><strong id="skill-title">暂停片刻</strong><small id="skill-detail">原地长按空格，让附近的忙碌慢下来</small></span><kbd>长按</kbd></button>
+          <div class="session-buttons"><button id="restart-btn" class="text-btn">↻ 重新开始 <kbd>R</kbd></button><span><kbd>P</kbd> 暂停</span></div>
+        </section>
+      </aside>
+
+      <section class="island-panel" aria-label="心情小岛游戏区">
+        <div class="board-header"><div class="board-title"><span class="live-dot"></span><strong>心情小岛</strong><span class="board-subtitle">MOOD ISLAND</span></div><div class="board-stats"><span>已送达 <b id="delivery-count">0</b></span><span class="stat-divider"></span><span>支持能量 <b id="energy-label">0</b><small> / 100</small></span></div></div>
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="game-canvas" width="1280" height="800" tabindex="0" aria-label="心情小岛。使用 WASD 或方向键移动，短按空格拾取或递送，原地长按空格释放暂停片刻。">请使用支持 Canvas 的现代浏览器体验游戏。</canvas>
+          <div class="map-badge" id="map-badge"><span>✦</span> 小小支持，也有大大能量</div>
+          <div id="interaction-hint" class="interaction-hint" hidden><kbd>空格</kbd><span>领取补给</span></div>
+          <div id="toast" class="toast" role="status" hidden></div>
+          <div id="countdown" class="countdown" hidden><span>准备出发</span><strong id="countdown-number">3</strong><small>你的每一份支持，都有意义</small></div>
+          <div id="pause-shade" class="pause-shade" hidden><span>◌</span><strong>给这一刻，留个空白</strong><p>游戏已暂停，时间也会等你。</p><button id="resume-btn" class="primary-btn">继续旅程 <span aria-hidden="true">→</span></button><small>也可以按 P / Esc 继续</small></div>
+          <div class="energy-track" aria-label="灯塔点亮进度"><span id="energy-fill"></span></div>
+        </div>
+        <div class="board-footer"><div class="map-legend"><span><i class="legend-icon rest">☕</i>休息一下</span><span><i class="legend-icon plan">▤</i>拆分小目标</span><span><i class="legend-icon talk">☏</i>找人聊聊</span></div><span id="board-status">收集一份补给，开启一段支持</span></div>
+      </section>
+    </main>
+
+    <section class="care-strip" aria-label="我们的心理健康主题"><div><span>01</span><p><b>觉察情绪</b><small>每一种心情，都值得被看见</small></p></div><i></i><div><span>02</span><p><b>照顾自己</b><small>允许休息，也允许慢一点</small></p></div><i></i><div><span>03</span><p><b>主动求助</b><small>有些路，可以一起走</small></p></div><span class="strip-flower" aria-hidden="true">✳</span></section>
+    <footer class="site-footer"><span>情绪没有好坏，支持可以有很多种。</span><span>心理健康科普体验 · 不提供心理诊断或治疗</span></footer>
+  </div>
+
+  <dialog id="tutorial-dialog" class="modal tutorial-modal" aria-labelledby="tutorial-title">
+    <button class="modal-close" id="tutorial-close" aria-label="关闭玩法说明">×</button>
+    <p class="eyebrow">出发前，花 10 秒认识小岛</p><h2 id="tutorial-title">支持，从一小步开始。</h2><p class="modal-intro">你有 120 秒。送达 5 份补给，就能点亮灯塔；之后还能继续传递支持。</p>
+    <div class="tutorial-steps"><article><span>01</span><h3>领取补给</h3><p>用 <b>WASD / 方向键</b>移动。走近上方任意补给站，<b>短按空格</b>领取，每次携带一份。</p></article><article><span>02</span><h3>把支持送到</h3><p>走近下方的朋友，<b>短按空格</b>递送。听听他们的需要，三种补给都有各自的帮助。</p></article><article><span>03</span><h3>允许慢一点</h3><p>避开移动的压力云。受阻掉落后可以捡回；<b>原地长按空格</b>，让附近的压力云暂时减速。</p></article></div>
+    <div id="mode-summary" class="mode-summary">当前选择：限时体验版 · 120 秒内完成</div>
+    <div class="tutorial-tip">☀ 情绪不是需要打败的敌人。我们练习的，是给自己和别人多一种支持。为了让支持公平流动，每位朋友先收到一份后，才能进入下一轮。</div>
+    <button id="begin-btn" class="primary-btn">我准备好了，出发 <span aria-hidden="true">→</span></button>
+    <p class="modal-footnote">短按 = 松开空格时互动　·　长按 = 原地停留约 0.7 秒　·　P / Esc 暂停</p>
+  </dialog>
+
+  <dialog id="restart-dialog" class="modal small-modal" aria-labelledby="restart-title"><p class="eyebrow">新的旅程</p><h2 id="restart-title">从第一份关心重新出发？</h2><p>本局进度会重置，准备好后重新计时 120 秒。</p><div class="dialog-actions"><button id="cancel-restart" class="secondary-btn">回到这一局</button><button id="confirm-restart" class="primary-btn">重新出发 ↗</button></div></dialog>
+
+  <dialog id="result-dialog" class="modal result-modal" aria-labelledby="result-title"><div id="result-flower" class="result-flower" aria-hidden="true">✺</div><p id="result-eyebrow" class="eyebrow">通关结算 · 你的支持已经抵达</p><h2 id="result-title">谢谢你，把支持送了出去。</h2><p id="result-description">每一份小小的支持，都让这座小岛亮了一点。</p><div class="completion-summary"><div><span>本局用时</span><strong id="result-time">--:--</strong></div><div><span>完成状态</span><strong id="result-status">已完成</strong></div><div id="rating-block"><span>本局评级</span><strong id="result-stars" aria-label="评级">★★★</strong></div></div><div class="result-numbers"><div><strong id="result-count">0</strong><span>次支持送达</span></div><div><strong id="result-energy">0</strong><span>点灯塔能量</span></div></div><div id="result-actions" class="result-actions"></div><p id="result-tip" class="result-tip"></p><div class="dialog-actions"><button id="home-btn" class="secondary-btn">回到小岛首页</button><button id="again-btn" class="primary-btn">重新开始 ↗</button></div><p class="modal-footnote">这是对支持行动的记录，不是对心理状态的评价。</p></dialog>
+
+  <noscript><div class="noscript">请在浏览器中开启 JavaScript 后体验《心情补给站》。</div></noscript>
+</body>
+</html>
